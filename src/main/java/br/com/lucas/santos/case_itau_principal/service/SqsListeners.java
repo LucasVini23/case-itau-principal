@@ -24,23 +24,30 @@ public class SqsListeners {
     private final UserBatchMongoRepository mongoRepository;
 
     @SqsListener("fila-appBatch")
-    public void listenerBatch(String message) throws JsonProcessingException {
+    public void listenerBatch(String message) {
         mapper.findAndRegisterModules();
-        UserBatch user = mapper.readValue(message, UserBatch.class);
+        try {
+            UserBatch user = mapper.readValue(message, UserBatch.class);
 
-        notification.sendAnotherApi(user);
-        if (user.isRenegotiate()) {
-            service.validateDebt(user);
-            service.validateAcceptProposal(user);
-            payment.sendAnotherApi(user);
-            if (user.getDueDate().isBefore(LocalDate.now()) && !user.getPayment().getPaid().equals("PAGO")) {
-                user.setStatus("Inadimplente");
-                log.info("Enviado para aplicação de negativação");
+            notification.sendAnotherApi(user);
+            if (user.isRenegotiate()) {
+                service.validateDebt(user);
+                if (user.getProposal() != null) {
+                    service.validateAcceptProposal(user);
+                    payment.sendAnotherApi(user);
+                    if (user.getDueDate().isBefore(LocalDate.now()) && !user.getPayment().getPaid().equals("PAGO")) {
+                        user.setStatus("Inadimplente");
+                        log.info("Enviado para aplicação de negativação");
+                    }
+                    //        repository.save(user); Update no usuario
+                    mongoRepository.save(user);
+                }
             }
-            //        repository.save(user); Update no usuario
-            mongoRepository.save(user);
+            log.info("Terminou todo o processo do cliente: {}", user.getName());
         }
-        log.info("Terminou todo o processo do cliente: {}", user.getName());
+        catch (JsonProcessingException exception) {
+            throw new RuntimeException("Erro na conversão do JSON ", exception);
+        }
     }
 
     @SqsListener("fila-appProcessedPayment")

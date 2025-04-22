@@ -31,14 +31,15 @@ public class PrincipalService {
                 Integer score = getScore(user);
 
                 if (score < 400) {
-                    System.out.println("No momento não é possivel ser feita uma renegociação");
+                    log.info("No momento não é possivel ser feita uma renegociação");
                 }
-                if(score < 600) {
+                else if(score < 600) {
                     user.setProposal(calcuteProposal(4, 0.10, debt));
                 }
                 else {
                     user.setProposal(calcuteProposal(8, 0.20, debt));
                 }
+
             }
         HistoryProposal historyProposal = mapProposal.toNotification(user);
         historyRepository.save(historyProposal);
@@ -48,9 +49,9 @@ public class PrincipalService {
 
     public UserBatch validateAcceptProposal(UserBatch user) {
         Proposal proposal = user.getProposal();
-        if (proposal == null) return user;
         if (proposal.getDebt().equals(user.getDebt().getDebt()) && proposal.isAccept()) {
             user.getDebt().setValueDebt(proposal.getFinalValue());
+            log.info("Nova proposta aceita pelo cliente: {}", user.getName());
         }
         return user;
     }
