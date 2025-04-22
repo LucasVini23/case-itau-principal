@@ -1,16 +1,18 @@
-package br.com.lucas.santos.case_itau_principal.entity;
+package br.com.lucas.santos.case_itau_principal.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
-
 
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserBatch {
+public class UserNotification {
 
     private String name;
     private String document;
@@ -19,5 +21,4 @@ public class UserBatch {
     private List<String> addresses;
     private String status;
     private LocalDate dueDate;
-    private LocalDate notification;
 }

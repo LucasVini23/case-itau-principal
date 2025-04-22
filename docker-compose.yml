@@ -1,0 +1,48 @@
+services:
+  localstack:
+    container_name: "${LOCALSTACK_DOCKER_NAME:-localstack-main}"
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+    environment:
+      # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
+      - DEBUG=${DEBUG:-0}
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+  db:
+    image: mysql/mysql-server:latest
+    container_name: mysql-container
+    restart: always
+    environment:
+      - MYSQL_DATABASE=caseitau
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=lucas
+      - MYSQL_PASSWORD=123456
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-volume:/var/lib/mysql
+
+  mongo:
+    image: 'mongo:7.0.5'
+    container_name: mongo-docker
+    ports:
+      - 27018:27017
+    volumes:
+      - my-data:/var/lib/mongodb/data
+
+  mongo-express:
+    image: 'mongo-express:1.0.2'
+    container_name: mongo-docker-express
+    ports:
+      - 8082:8081
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: lucas
+      ME_CONFIG_BASICAUTH_PASSWORD: 123456
+
+volumes:
+  mysql-volume:
+    driver: local
+  my-data:
