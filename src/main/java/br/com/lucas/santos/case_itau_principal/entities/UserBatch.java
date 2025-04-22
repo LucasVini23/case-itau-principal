@@ -2,12 +2,14 @@ package br.com.lucas.santos.case_itau_principal.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.List;
 
 
-@Entity
+//@Entity
+@Document("Cliente")
 @Builder
 @Data
 @AllArgsConstructor
@@ -25,12 +27,12 @@ public class UserBatch {
     private String status;
     private LocalDate dueDate;
     private LocalDate notification;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Debt debt;
     private Integer scoreCredit;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Proposal proposal;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Payment payment;
     private boolean renegotiate;
 }

@@ -1,5 +1,6 @@
 package br.com.lucas.santos.case_itau_principal.service;
 
+import br.com.lucas.santos.case_itau_principal.adapters.repository.UserBatchMongoRepository;
 import br.com.lucas.santos.case_itau_principal.entities.Payment;
 import br.com.lucas.santos.case_itau_principal.entities.UserBatch;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,6 +21,7 @@ public class SqsListeners {
     private final SendQueueNotification notification;
     private final SendQueuePayment payment;
     private final PrincipalService service;
+    private final UserBatchMongoRepository mongoRepository;
 
     @SqsListener("fila-appBatch")
     public void listenerBatch(String message) throws JsonProcessingException {
@@ -36,6 +38,7 @@ public class SqsListeners {
                 log.info("Enviado para aplicação de negativação");
             }
             //        repository.save(user); Update no usuario
+            mongoRepository.save(user);
         }
         log.info("Terminou todo o processo do cliente: {}", user.getName());
     }
