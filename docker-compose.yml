@@ -42,6 +42,24 @@ services:
       ME_CONFIG_BASICAUTH_USERNAME: lucas
       ME_CONFIG_BASICAUTH_PASSWORD: 123456
 
+
+  case-it-notification:
+    image: lucasvini23/case-it-notificacao
+    ports:
+      - 8083:8083
+    environment:
+      ACCOUNT_SID: TOKEN
+      AUTH_TOKEN: token
+      MY_PHONE_NUMBER: YOURNUMBERWITHPLUS
+      PHONE_NUMBER_TWILLIO: TWILLIONUMBER
+      EMAIL_USER: USER
+      EMAIL_PASSWORD: PASS
+
+  case-it-payment:
+    image: lucasvini23/case-it-payment
+    ports:
+      - 8084:8084
+
 volumes:
   mysql-volume:
     driver: local

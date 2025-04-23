@@ -1,8 +1,6 @@
 package br.com.lucas.santos.case_itau_principal.service;
 
-import br.com.lucas.santos.case_itau_principal.adapters.repository.DebtRepository;
 import br.com.lucas.santos.case_itau_principal.adapters.repository.HistoryRepository;
-import br.com.lucas.santos.case_itau_principal.adapters.repository.UserBatchRepository;
 import br.com.lucas.santos.case_itau_principal.entities.Debt;
 import br.com.lucas.santos.case_itau_principal.entities.HistoryProposal;
 import br.com.lucas.santos.case_itau_principal.entities.Proposal;
@@ -19,8 +17,8 @@ import java.time.LocalDate;
 @Slf4j
 public class PrincipalService {
 
-    private final UserBatchRepository repository;
-    private final DebtRepository debtRepository;
+//    private final UserBatchRepository repository;
+//    private final DebtRepository debtRepository;
     private final MapProposal mapProposal;
     private final HistoryRepository historyRepository;
 

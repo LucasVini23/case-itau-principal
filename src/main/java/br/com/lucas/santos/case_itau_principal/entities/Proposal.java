@@ -25,6 +25,6 @@ public class Proposal {
     private Double finalValue;
     private boolean accept;
 
-    @OneToOne
-    private UserBatch user;
+//    @OneToOne
+//    private UserBatch user;
 }

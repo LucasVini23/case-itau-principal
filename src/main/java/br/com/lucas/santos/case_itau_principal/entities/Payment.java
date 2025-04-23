@@ -24,8 +24,8 @@ public class Payment {
     private CardUser card;
     private String paid;
 
-    @OneToOne
-    @JsonIgnore
-    private UserBatch user;
+//    @OneToOne
+//    @JsonIgnore
+//    private UserBatch user;
 
 }

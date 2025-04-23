@@ -87,6 +87,11 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<version>9.2.0</version>
 		</dependency>
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>4.0.2</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
